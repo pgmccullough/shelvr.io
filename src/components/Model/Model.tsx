@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Board } from '../../types/AppTypes';
 
 export const Model: FC<Board> = ({ width, height, depth, finish }) => {
@@ -9,6 +9,10 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
   const renderer = useRef<THREE.WebGLRenderer | null>(null);
   const scene = useRef<THREE.Scene | null>(null);
   const camera = useRef<THREE.PerspectiveCamera | null>(null);
+
+  console.log('Width:', width);
+  console.log('Height:', height);
+  console.log('Camera Aspect:', camera.current?.aspect);
 
   useEffect(() => {
     const loadImage = async () => {
@@ -23,7 +27,7 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
     };
 
     loadImage();
-  }, [finish]);
+  }, []);
 
   useEffect(() => {
     if (!loading && textureImage && refContainer.current) {
@@ -77,21 +81,31 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
     }
   }, [loading, textureImage, width, height, depth]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       if (camera.current && renderer.current && refContainer.current) {
-        // Update camera aspect ratio
-        camera.current.aspect = refContainer.current.clientWidth / refContainer.current.clientHeight;
-        camera.current.updateProjectionMatrix();
-
         // Update renderer size
         renderer.current.setSize(refContainer.current.clientWidth, refContainer.current.clientHeight);
+  
+        // Ensure the camera is initialized
+        if (camera.current.aspect !== undefined) {
+          // Update camera aspect ratio
+          camera.current.aspect = refContainer.current.clientWidth / refContainer.current.clientHeight;
+          camera.current.updateProjectionMatrix();
+        }
+  
+        // ... (other resize-related logic if needed)
       }
     };
-
+  
     // Attach event listener for window resize
     window.addEventListener('resize', handleResize);
-
+  
+    // Initial setup
+    setTimeout(() => {
+      handleResize();
+    },10);
+  
     return () => {
       // Remove event listener on component unmount
       window.removeEventListener('resize', handleResize);

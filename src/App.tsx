@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Header, Hero, Model, Pallet } from './components';
+import { Header, Hero, Pallet } from './components';
 import { Board } from './types/AppTypes';
 
 function App() {
