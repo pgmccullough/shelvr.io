@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header cutList={cutList} />
       <Hero setCutList={setCutList} />
       <Pallet cutList={cutList} />
     </>
