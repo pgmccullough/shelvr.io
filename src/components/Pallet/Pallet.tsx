@@ -12,7 +12,7 @@ export const Pallet: FC<{cutList: Array<Board>}> = ({ cutList }) => {
                     <Model
                         key={board.id}
                         width={board.width}
-                        height={board.height}
+                        length={board.length}
                         depth={board.depth}
                         finish={board.finish}
                     />

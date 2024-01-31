@@ -11,9 +11,9 @@ export const Hero: FC<{
 
     const [ previewBoard, setPreviewBoard ] = useState<Board>({
       id: uuidv4(),
-      width: 1,
-      height: 5,
-      depth: 0.5,
+      length: 96,
+      width: 3.5,
+      depth: 1.5,
       finish: "Oak"
     });
 
@@ -23,7 +23,7 @@ export const Hero: FC<{
                 <Model
                     key={previewBoard.id}
                     width={previewBoard.width}
-                    height={previewBoard.height}
+                    length={previewBoard.length}
                     depth={previewBoard.depth}
                     finish={previewBoard.finish}
                 />

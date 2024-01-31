@@ -1,7 +1,7 @@
 export type Board = {
   id?: string
   width: number,
-  height: number,
+  length: number,
   depth: number,
   finish: "Oak",
 }

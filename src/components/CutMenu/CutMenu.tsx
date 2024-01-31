@@ -14,7 +14,7 @@ export const CutMenu: FC<{
 
   return (
     <div className={style['cut-menu']}>
-      {["height","width","depth"].map((measurement: string) =>
+      {["length","width","depth"].map((measurement: string) =>
         <div key={measurement}>
           <label htmlFor={`cut-menu--${measurement}`}>{measurement} (inches)</label>
           <input 

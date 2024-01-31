@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Board } from '../../types/AppTypes';
 
 import style from './Model.module.scss';
 
-export const Model: FC<Board> = ({ width, height, depth, finish }) => {
+export const Model: FC<Board> = ({ width, length, depth, finish }) => {
   const [textureImage, setTextureImage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [plankObject, setPlankObject] = useState<THREE.Mesh<THREE.BoxGeometry, THREE.MeshLambertMaterial, THREE.Object3DEventMap>>();
@@ -29,7 +29,7 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
   }, []);
 
   useEffect(() => {
-    if (!loading && textureImage && refContainer.current && Number(width) && Number(height) && Number(depth)) {
+    if (!loading && textureImage && refContainer.current && Number(width) && Number(length) && Number(depth)) {
       // Create a scene
       console.log("new scene?")
       if(!scene.current) {
@@ -48,9 +48,20 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
 
       // Create a wooden material
       const woodTexture = new THREE.TextureLoader().load(textureImage, () => {
+        const maxDimension = Math.max(width, length, depth);
+        let scaleFactor;
+        
+        // Apply different scale factors based on the size of the plank
+        if (maxDimension > 10) {
+          scaleFactor = 1 / (3 * Math.log(maxDimension + 2));
+        } else {
+          // Adjust the scale factor for smaller planks (e.g., 2x2x2)
+          scaleFactor = 1 / (1.5 * Math.log(maxDimension + 2));
+        }
+
+        const plankGeometry = new THREE.BoxGeometry(width * scaleFactor, length * scaleFactor, depth * scaleFactor);
         // Texture loaded callback
         // Create the wooden plank geometry
-        const plankGeometry = new THREE.BoxGeometry(width, height, depth);
 
         // Create a mesh with the wooden material and geometry
         const woodMaterial = new THREE.MeshLambertMaterial({ map: woodTexture });
@@ -90,9 +101,9 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
         !plankObject && animate();
       });
     }
-  }, [ loading, textureImage, width, height, depth ]);
+  }, [ loading, textureImage, width, length, depth ]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       if (camera.current && renderer.current && refContainer.current) {
         // Update renderer size
