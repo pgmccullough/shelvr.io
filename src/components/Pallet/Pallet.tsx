@@ -6,9 +6,9 @@ import style from './Pallet.module.scss';
 
 export const Pallet: FC<{cutList: Array<Board>}> = ({ cutList }) => {
     return (
-        <>
+        <section className={style['pallet']}>
             {cutList.map((board: Board) => 
-                <div style={{background: "gray", width: "200px", height: "200px"}}>
+                <article className={style['pallet__item']}>
                     <Model
                         key={board.id}
                         width={board.width}
@@ -16,8 +16,8 @@ export const Pallet: FC<{cutList: Array<Board>}> = ({ cutList }) => {
                         depth={board.depth}
                         finish={board.finish}
                     />
-                </div>
+                </article>
             )}
-        </>
+        </section>
     )
 }

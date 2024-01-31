@@ -1,6 +1,8 @@
 import * as THREE from 'three';
-import { FC, memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Board } from '../../types/AppTypes';
+
+import style from './Model.module.scss';
 
 export const Model: FC<Board> = ({ width, height, depth, finish }) => {
   const [textureImage, setTextureImage] = useState<string>('');
@@ -113,7 +115,7 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
     // Initial setup
     setTimeout(() => {
       handleResize();
-    },10);
+    },100);
   
     return () => {
       // Remove event listener on component unmount
@@ -121,5 +123,5 @@ export const Model: FC<Board> = ({ width, height, depth, finish }) => {
     };
   }, []);
 
-  return <div ref={refContainer} style={{ width: '100%', height: '100%' }} />;
+  return <div ref={refContainer} className={style.model} />;
 };

@@ -5,4 +5,10 @@
   position: absolute;
   bottom: 1rem;
   right: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 0 6px 0 #000;
+  padding: 1rem;
+  &__input {
+    width: 100%;
+  }
 }

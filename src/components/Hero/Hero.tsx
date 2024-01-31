@@ -30,6 +30,7 @@ export const Hero: FC<{
                 <CutMenu
                   previewBoard={previewBoard}
                   setPreviewBoard={setPreviewBoard}
+                  setCutList={setCutList}
                 />
             </div>
         </>
