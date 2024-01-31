@@ -1,3 +1,5 @@
+@use '../../style/mixins' as *;
+
 .pallet {
     width: calc(100% - 5rem);
     margin: 2.5rem;
@@ -7,10 +9,16 @@
     &__item {
         position: relative;
         background: white;
-        width: 15%;
+        width: 90%;
         aspect-ratio: 1;
         margin: 1.25rem;
         border-radius: 4px;
         box-shadow: 0 0 6px 0 #000;
+        @include tablet {
+            width: 40%;
+        }
+        @include desktop {
+            width: 15%;
+        }
     }
 }
